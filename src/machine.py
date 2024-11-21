@@ -7,7 +7,9 @@ class Machine:
         """Parses an input string into a list of ingredients in order"""
         _ = []
         for symbol in input:
-            _.append(MAPPINGS[symbol])
+            ingredient = MAPPINGS.get(symbol)
+            if ingredient is not None: # TODO: Check if we want to just ignore them or throw an exception
+                _.append(ingredient)
         return _
     
     def run(self, input: str):
