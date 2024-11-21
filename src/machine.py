@@ -1,4 +1,4 @@
-from ingredients import Ingredient, IngredientType
+from ingredients import Ingredient, IngredientType, MAPPINGS
 
 class Machine:
     """Represents our machine (NFA)"""
@@ -6,8 +6,11 @@ class Machine:
         pass
     
     def parse(self, input: str) -> list[Ingredient]:
-        # TODO: Implement parsing from string into array
-        return input
+        """Parses an input string into a list of ingredients in order"""
+        _ = []
+        for symbol in input:
+            _.append(MAPPINGS[symbol])
+        return _
     
     def run(self, input: str):
         # Parse the input
