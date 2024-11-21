@@ -16,7 +16,7 @@ class IngredientType(Enum):
     PASTA = 0
     SAUCE = 1
     ADDON = 2
-
+    
 class Ingredient:
     """Class representing an ingredient"""
     def __init__(self, name: str, type: IngredientType):
@@ -38,3 +38,10 @@ class Ingredient:
     @staticmethod
     def isIngredient(input) -> bool:
         return input in INGREDIENTS
+    
+    def __str__(self):
+        return f"{self.name}"
+    
+    def __repr__(self):
+        return f"{self.name}({self.type})"
+
