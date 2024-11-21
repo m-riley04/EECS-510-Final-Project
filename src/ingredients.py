@@ -45,3 +45,13 @@ class Ingredient:
     def __repr__(self):
         return f"{self.name}({self.type})"
 
+def create_ingredient(name:str) -> Ingredient | None:
+    """Creates an ingredient for a given name"""
+    if name in PASTAS:
+        return Ingredient(name, IngredientType.PASTA)
+    elif name in SAUCES:
+        return Ingredient(name, IngredientType.SAUCE)
+    elif name in ADDONS:
+        return Ingredient(name, IngredientType.ADDON)
+    else:
+        return None
