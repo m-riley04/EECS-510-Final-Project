@@ -23,14 +23,18 @@ class Ingredient:
         self.name = name
         self.type = type
     
-    def isPasta(self, input) -> bool:
+    @staticmethod
+    def isPasta(input) -> bool:
         return input in PASTAS
     
-    def isSauce(self, input) -> bool:
+    @staticmethod
+    def isSauce(input) -> bool:
         return input in SAUCES
     
-    def isAddon(self, input) -> bool:
+    @staticmethod
+    def isAddon(input) -> bool:
         return input in ADDONS
     
-    def isIngredient(self, input) -> bool:
+    @staticmethod
+    def isIngredient(input) -> bool:
         return input in INGREDIENTS
