@@ -1,15 +1,10 @@
 from enum import Enum
-
-PASTAS: list[str] = ["spaghetti"]
-SAUCES: list[str] = ["marinara", "alfredo", "butter", "carbonara"]
-ADDONS: list[str] = ["ground meat", "olive oil", "minced garlic", "chopped onion"]
-INGREDIENTS = PASTAS + SAUCES + ADDONS
-SYMBOLS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-MAPPINGS = {}
-
-# Create mappings between the ingredients and a specific letter
-for i, ingredient in enumerate(INGREDIENTS):
-    MAPPINGS[SYMBOLS[i]] = ingredient
+    
+# Initialize the constants for the class usage (DO NOT EDIT THESE INITIALIZATIONS)
+PASTAS      = []
+SAUCES      = []
+ADDONS      = []
+INGREDIENTS = []
 
 class IngredientType(Enum):
     """Enum representing the type of ingredient"""
@@ -55,3 +50,18 @@ def create_ingredient(name:str) -> Ingredient | None:
         return Ingredient(name, IngredientType.ADDON)
     else:
         return None
+
+### MAIN VARIABLES
+# Input the actual values of the ingredient types
+PASTAS: list[str]   = ["spaghetti"]
+SAUCES: list[str]   = ["marinara", "alfredo", "butter", "carbonara"]
+ADDONS: list[str]   = ["ground meat", "olive oil", "minced garlic", "chopped onion"]
+
+# Generate the list of ingredients
+INGREDIENTS: list[Ingredient] = [create_ingredient(ingredient) for ingredient in PASTAS + SAUCES + ADDONS]
+
+# Create mappings between the ingredients and a specific letter
+SYMBOLS: list[str] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+MAPPINGS: dict[str, Ingredient] = {}
+for i, ingredient in enumerate(INGREDIENTS):
+    MAPPINGS[SYMBOLS[i]] = ingredient
