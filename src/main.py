@@ -1,6 +1,14 @@
 from machine import Machine
 from ingredients import INGREDIENTS, MAPPINGS
 
+def accept(A: Machine, w: str):
+    # Run the input in the machine
+    _ = A.run(str)
+    
+    # Return either "accept" or "reject"
+    if _: return "accept"
+    else: return "reject"
+
 def main():
     # Print out the possible ingredients and their corresponding symbol
     print("Ingredients:")
@@ -10,9 +18,11 @@ def main():
     # Get the input string
     inputString = input("Enter your ingredients: ")
     
-    # Run the input string through the machine
+    # Initialize the machine
     machine = Machine()
-    machine.run(input=inputString)
+    
+    # Test the machine against the input string
+    print(accept(A=machine, w=inputString))
 
 if __name__ == "__main__":
     main()
