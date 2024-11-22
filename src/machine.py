@@ -12,22 +12,22 @@ class Machine:
                 _.append(ingredient)
         return _
     
-    def run(self, input: str):
+    def run(self, input: str, print_output: bool = True) -> bool:
         """Runs the machine with a given input string"""
         # Parse the input
         ingredients: list[Ingredient] = self.parse(input)
         
         # Check if there is any input at all
         if len(ingredients) <= 0:
-            print("Invalid input. Please enter at least one ingredient.")
-            return
+            if print_output: print("Invalid input. Please enter at least one ingredient.")
+            return False
         
         # STATE 1: Check if the first ingredient is a pasta
         if ingredients[0].type == IngredientType.PASTA:
-            print(f"1. Begin by cooking the {ingredients[0]} pasta noodles.")
+            if print_output: print(f"1. Begin by cooking the {ingredients[0]} pasta noodles.")
         else:
             print("Invalid input. Please enter a valid pasta.")
-            return
+            return False
         
         # STATE(s) 2: Check for sauces and addons
         for i, ingredient in enumerate(ingredients[1:], 2):
@@ -38,7 +38,8 @@ class Machine:
                     print(f"{i}. Add {ingredient} to the pasta.")
                 case _:
                     print(f"Invalid input. Please enter a valid sauce or addon.")
-                    return
+                    return False
                 
         # END STATE
         print("Your pasta dish is ready! Enjoy!")
+        return True
