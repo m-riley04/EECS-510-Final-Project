@@ -3,7 +3,7 @@ from ingredients import INGREDIENTS, MAPPINGS
 
 def accept(A: Machine, w: str):
     # Run the input in the machine
-    _ = A.run(str)
+    _ = A.run(w)
     
     # Return either "accept" or "reject"
     if _: return "accept"

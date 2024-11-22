@@ -8,8 +8,9 @@ class Machine:
         _ = []
         for symbol in input:
             ingredient = MAPPINGS.get(symbol)
-            if ingredient is not None: # TODO: Check if we want to just ignore them or throw an exception
-                _.append(ingredient)
+            if ingredient is None:
+                ingredient = Ingredient("invalid", IngredientType.INVALID)
+            _.append(ingredient)
         return _
     
     def run(self, input: str, print_output: bool = True) -> bool:

@@ -11,6 +11,7 @@ class IngredientType(Enum):
     PASTA = 0
     SAUCE = 1
     ADDON = 2
+    INVALID = 3
     
 class Ingredient:
     """Class representing an ingredient"""
