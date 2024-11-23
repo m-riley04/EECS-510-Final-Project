@@ -54,9 +54,9 @@ def create_ingredient(name:str) -> Ingredient | None:
 
 ### MAIN VARIABLES
 # Input the actual values of the ingredient types
-PASTAS: list[str]   = ["spaghetti"]
-SAUCES: list[str]   = ["marinara", "alfredo", "butter", "carbonara"]
-ADDONS: list[str]   = ["ground meat", "olive oil", "minced garlic", "chopped onion"]
+PASTAS: list[str]   = ["Spaghetti pasta"]
+SAUCES: list[str]   = ["Marinara sauce", "Alfredo sauce", "Butter sauce", "Carbonara sauce", "Vodka sauce"]
+ADDONS: list[str]   = ["Ground meat", "Olive oil", "Minced garlic", "Chopped onion", "Pesto"]
 
 # Generate the list of ingredients
 INGREDIENTS: list[Ingredient] = [create_ingredient(ingredient) for ingredient in PASTAS + SAUCES + ADDONS]
