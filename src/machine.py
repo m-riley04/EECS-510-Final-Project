@@ -25,7 +25,7 @@ class Machine:
         
         # STATE 1: Check if the first ingredient is a pasta
         if ingredients[0].type == IngredientType.PASTA:
-            if print_output: print(f"1. Begin by cooking the {ingredients[0]} pasta noodles.")
+            if print_output: print(f"1. Begin by cooking the {ingredients[0]} noodles.")
         else:
             print("Invalid input. Please enter a valid pasta.")
             return False
@@ -34,7 +34,7 @@ class Machine:
         for i, ingredient in enumerate(ingredients[1:], 2):
             match (ingredient.type):
                 case IngredientType.SAUCE:
-                    print(f"{i}. Add {ingredient} sauce to the pasta.")
+                    print(f"{i}. Add {ingredient} to the pasta.")
                 case IngredientType.ADDON:
                     print(f"{i}. Add {ingredient} to the pasta.")
                 case _:
