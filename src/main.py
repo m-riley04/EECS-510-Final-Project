@@ -1,8 +1,8 @@
 from machine import Machine
 from ingredients import INGREDIENTS, MAPPINGS
 
-from automata.fa.nfa import NFA
-from visual_automata.fa.nfa import VisualNFA
+from automathon import NFA
+import automathon
 
 def accept(A: Machine, w: str):
     # Run the input in the machine
@@ -39,14 +39,19 @@ def parse_input_file(filename: str):
         for state, transition in transitions.items():
             print(f"{state}: {transition}")
         
-        # Visualize the NFA
-        nfa = VisualNFA(
-            states=set(states), 
-            input_symbols=set(symbols), 
-            transitions=transitions, 
+        # Visualize the NFA using graphiz
+        nfa = NFA(
+            q=set(states), 
+            sigma=set(symbols), 
+            delta=transitions, 
             initial_state=start_state, 
-            final_states=set(accept_states))
-        nfa.show_diagram()
+            f=set(accept_states))
+        
+        try:
+            nfa.view("nfa")
+        except Exception as e:
+            print("Graphviz not found or another error occurred. Unable to visualize NFA.")
+            print(f"Error: {e}")
         
         # Close the file
         file.close()
