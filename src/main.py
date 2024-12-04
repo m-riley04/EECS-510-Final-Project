@@ -57,7 +57,7 @@ def parse_input_file(filename: str):
         file.close()
 
 def main():
-    parse_input_file("automaton.txt")
+    parse_input_file("automaton_example.txt")
     
     # Print out the possible ingredients and their corresponding symbol
     print("Ingredients:")
