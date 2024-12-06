@@ -34,8 +34,6 @@ def main():
     nfa: NFA = NFA(filename=NFA_FILENAME, debug=DEBUG)
     nfa.print()
     nfa.show_diagram()
-    # test_machine() # Uncomment if you want original test machine behavior
-    
 
 if __name__ == "__main__":
     main()
