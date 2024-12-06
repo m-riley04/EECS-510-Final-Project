@@ -17,6 +17,7 @@ def accept(A: NFA, w: str):
 def main():
     # Initialize NFA
     nfa: NFA = NFA(filename=NFA_FILENAME, debug=DEBUG)
+    nfa.print()
     
     # Get the input string
     inputString = input("Enter your ingredients: ")
