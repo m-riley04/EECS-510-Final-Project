@@ -7,11 +7,11 @@ from state import State
 class NFA:
     def __init__(self, filename:str, debug:bool=False) -> None:
         # Initialize machine variables
-        self.states: list[State] = []
-        self.symbols: list[str] = []
+        self.states: set[State] = []
+        self.symbols: set[str] = []
         self.start_state: State = None
-        self.accept_states: list[State] = []
-        self.transitions: dict[str, dict[State, set[State]]] = dict()
+        self.accept_states: set[State] = []
+        self.transitions: dict[State, dict[str, set[State]]] = dict()
         
         # Initialize other variables
         self.debug = debug
@@ -25,6 +25,12 @@ class NFA:
             if s.name == name:
                 return s
         return None
+    
+    def get_states_as_strings(self) -> list[str]:
+        return [s.name for s in self.states]
+    
+    def get_accepting_states_as_strings(self) -> list[str]:
+        return [s.name for s in self.accept_states]
     
     def parse_input_file(self, filename: str) -> bool:
         """Parses the input file"""
@@ -46,7 +52,7 @@ class NFA:
             self.accept_states = [self.states[i] for i in range(len(_)) if _[i] == self.states[i].name]
             
             # Line(s) 5+: Transitions
-            self.transitions = {state: {} for state in self.states}
+            self.transitions = {state.name: {} for state in self.states}
             for line in lines[4:]:
                 from_state, symbol, to_state = line.strip().split()
                 if symbol not in self.transitions[from_state]:
@@ -70,13 +76,17 @@ class NFA:
             print(f"{state}: {transition}")
             
     def show_diagram(self, output_dir="output", output_name="nfa"):
+        # Copy states as just strings
+        _states_strs = self.get_states_as_strings()
+        _accept_strs = self.get_accepting_states_as_strings()
+        
         # Visualize the NFA using graphiz
         visual_nfa = VisualNFA(
-            q=self.states, 
+            q=_states_strs, 
             sigma=self.symbols, 
             delta=self.transitions, 
-            initial_state=self.start_state, 
-            f=self.accept_states)
+            initial_state=self.start_state.name, 
+            f=_accept_strs)
         
         # Attempt to visualize using Graphviz
         try:
