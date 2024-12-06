@@ -6,9 +6,9 @@ from nfa import NFA
 DEBUG:bool = False
 NFA_FILENAME:str = "nfa.txt"
 
-def accept(A: Machine, w: str):
+def accept(A: NFA, w: str):
     # Run the input in the machine
-    _ = A.run(w)
+    _ = A.accept(w)
     
     # Return either "accept" or "reject"
     if _: return "accept"
@@ -31,9 +31,14 @@ def test_machine():
     print(accept(A=machine, w=inputString))
 
 def main():
+    # Initialize NFA
     nfa: NFA = NFA(filename=NFA_FILENAME, debug=DEBUG)
-    nfa.print()
-    nfa.show_diagram()
+    
+    # Get the input string
+    inputString = input("Enter your ingredients: ")
+    
+    # Return if it accepts or rejects the input string
+    accept(A=nfa, w=inputString)
 
 if __name__ == "__main__":
     main()
