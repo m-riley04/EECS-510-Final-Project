@@ -7,11 +7,11 @@ from state import State
 class NFA:
     def __init__(self, filename:str, debug:bool=False) -> None:
         # Initialize machine variables
-        self.states: set[State] = []
-        self.symbols: set[str] = []
+        self.states: set[State] = {}
+        self.symbols: set[str] = {}
         self.start_state: State = None
-        self.accept_states: set[State] = []
-        self.transitions: dict[State, dict[str, set[State]]] = dict()
+        self.accept_states: set[State] = {}
+        self.transitions: dict[State, dict[str, set[State]]] = {}
         
         # Initialize other variables
         self.debug = debug
@@ -26,16 +26,16 @@ class NFA:
                 return s
         return None
     
-    def accept(self, string:str)-> bool:
+    def accept(self, w:str)-> bool:
         """Checks if the given string is accepted by the NFA"""
-        current_states: set[State] = { self.start_state }
-        for symbol in string:
-            next_states: set = {}
+        current_states = set([self.start_state])
+        for symbol in w:
+            next_states = set()
             for state in current_states:
                 if symbol in self.transitions[state.name]:
                     next_states.update(self.transitions[state.name][symbol])
             current_states = next_states
-        return any(state in self.accept_states for state in current_states)
+        return len(current_states.intersection(self.accept_states)) > 0
     
     def get_states_as_strings(self) -> list[str]:
         return [s.name for s in self.states]
@@ -60,15 +60,19 @@ class NFA:
             
             # Line 4: A whitespace-separated list of accept states
             _ = lines[3].replace("\n", "").split(" ")
-            self.accept_states = [self.states[i] for i in range(len(_)) if _[i] == self.states[i].name]
+            self.accept_states = [self.find_state(name=s) for s in _]
             
             # Line(s) 5+: Transitions
             self.transitions = {state.name: {} for state in self.states}
             for line in lines[4:]:
                 from_state, symbol, to_state = line.strip().split()
-                if symbol not in self.transitions[from_state]:
-                    self.transitions[from_state][symbol] = set()
-                self.transitions[from_state][symbol].add(to_state)
+                # Find states from names
+                from_state = self.find_state(from_state)
+                to_state = self.find_state(to_state)
+                # Create transition
+                if symbol not in self.transitions[from_state.name]:
+                    self.transitions[from_state.name][symbol] = set()
+                self.transitions[from_state.name][symbol].add(to_state)
             
             # Close the file
             file.close()
@@ -86,7 +90,7 @@ class NFA:
         for state, transition in self.transitions.items():
             print(f"{state}: {transition}")
             
-    def show_diagram(self, output_dir="output", output_name="nfa"):
+    def show_diagram(self, output_dir:str="output", output_name:str="nfa"):
         # Copy states as just strings
         _states_strs = self.get_states_as_strings()
         _accept_strs = self.get_accepting_states_as_strings()
