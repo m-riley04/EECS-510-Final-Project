@@ -19,12 +19,23 @@ class NFA:
         # Parse the input file
         self.parse_input_file(filename)
         
-    def find_state(self, name:str):
+    def find_state(self, name:str) -> State:
         """Finds a state by name"""
         for s in self.states:
             if s.name == name:
                 return s
         return None
+    
+    def accept(self, string:str)-> bool:
+        """Checks if the given string is accepted by the NFA"""
+        current_states: set[State] = { self.start_state }
+        for symbol in string:
+            next_states: set = {}
+            for state in current_states:
+                if symbol in self.transitions[state.name]:
+                    next_states.update(self.transitions[state.name][symbol])
+            current_states = next_states
+        return any(state in self.accept_states for state in current_states)
     
     def get_states_as_strings(self) -> list[str]:
         return [s.name for s in self.states]
@@ -103,5 +114,4 @@ class NFA:
         except Exception as e:
             print("ERROR: Unable to visualize NFA.")
             print(f"Details: {e}")
-        
         
