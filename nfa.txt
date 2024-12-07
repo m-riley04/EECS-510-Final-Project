@@ -9,4 +9,4 @@ q1 D q2
 q1 E q2
 q1 F q2
 q1 G q2
-q2 '' q1
+q2 ~ q1
