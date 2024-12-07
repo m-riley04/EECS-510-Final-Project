@@ -6,24 +6,32 @@ from nfa import NFA
 DEBUG:bool = False
 NFA_FILENAME:str = "nfa.txt"
 
-def accept(A: NFA, w: str):
+def accept(A: NFA, w: str) -> None:
+    """
+    Tests a given string on a given machine.
+    Prints either "accept" with the path/trace, or "reject".
+    """
     # Run the input in the machine
     _ = A.accept(w)
     
-    # Return either "accept" or "reject"
-    if _: return "accept"
-    else: return "reject"
+    # Print the acceptance result
+    print(_)
+
+    # Print the path if accepted
+    if _ == True: 
+        for t in _.path:
+            print(t)
 
 def main():
     # Initialize NFA
     nfa: NFA = NFA(filename=NFA_FILENAME, debug=DEBUG)
-    nfa.print()
+    nfa.print() # Display parsed NFA info
     
     # Get the input string
     inputString = input("Enter your ingredients: ")
     
-    # Return if it accepts or rejects the input string
-    print(accept(A=nfa, w=inputString))
+    # Check if it accepts or returns the input
+    accept(A=nfa, w=inputString)
 
 if __name__ == "__main__":
     main()
