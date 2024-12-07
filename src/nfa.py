@@ -29,6 +29,9 @@ class AcceptResult:
         return len(self.path)
 
 class NFA:
+    """
+    Class representing an NFA built from an input file.
+    """
     def __init__(self, filename:str, debug:bool=False) -> None:
         # Initialize machine variables
         self.states: set[State] = {}
