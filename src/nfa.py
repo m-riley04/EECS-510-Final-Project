@@ -1,32 +1,11 @@
 import os
-from dataclasses import dataclass
 from PIL import Image
 from automathon import NFA as VisualNFA
 from state import State
+from acceptresult import AcceptResult
 
-LAMBDA_SYMBOL: str = "~"
-
-@dataclass
-class AcceptResult:
-    """
-    Class representing the return value for the "accept" method of an NFA
-    """
-    accepted: bool
-    path: list[str]
-
-    def __repr__(self):
-        if self.accepted: return "accept"
-        return "reject"
-    
-    def __str__(self):
-        if self.accepted: return "accept"
-        return "reject"
-    
-    def __bool__(self):
-        return self.accepted
-    
-    def __len__(self):
-        return len(self.path)
+### CONSTANTS ###
+LAMBDA_SYMBOL: str  = "~"
 
 class NFA:
     """
@@ -177,17 +156,13 @@ class NFA:
         Displays a diagram of the NFA using Graphviz.
         Prints error message if it is not possible.
         """
-        # Copy states as just strings
-        _states_strs = self.get_states_as_strings()
-        _accept_strs = self.get_accepting_states_as_strings()
-        
         # Visualize the NFA using graphiz
         visual_nfa = VisualNFA(
-            q=_states_strs, 
+            q=self.get_states_as_strings(), # Input calls for set of STRINGS
             sigma=self.symbols, 
             delta=self.transitions, 
             initial_state=self.start_state.name, 
-            f=_accept_strs)
+            f=self.get_accepting_states_as_strings()) # Input calls for set of STRINGS
         
         # Attempt to visualize using Graphviz
         try:
