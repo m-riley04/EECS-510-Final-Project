@@ -47,7 +47,9 @@ class NFA:
         self.parse_input_file(filename)
         
     def find_state(self, name:str) -> State:
-        """Finds a state by name"""
+        """
+        Finds a state by name.
+        """
         for s in self.states:
             if s.name == name:
                 return s
@@ -108,13 +110,21 @@ class NFA:
         return result
     
     def get_states_as_strings(self) -> list[str]:
+        """
+        Gets the list of states as a list of strings.
+        """
         return [s.name for s in self.states]
     
     def get_accepting_states_as_strings(self) -> list[str]:
+        """
+        Gets the list of accepting states as a list of strings.
+        """
         return [s.name for s in self.accept_states]
     
     def parse_input_file(self, filename: str) -> bool:
-        """Parses the input file"""
+        """
+        Parses the input file
+        """
         # Read the input file
         with open(filename, 'r') as file:
             lines = file.readlines()
@@ -151,7 +161,9 @@ class NFA:
         if self.debug: print(f"Parsed input file {filename} successfully!")
         
     def print(self):
-        """Prints the main values of the NFA (states, symbols, start state, accept state(s), and transitions)"""
+        """
+        Prints the main values of the NFA (states, symbols, start state, accept state(s), and transitions)
+        """
         print(f"States: {self.states}")
         print(f"Symbols: {self.symbols}")
         print(f"Start State: {self.start_state}")
@@ -161,6 +173,10 @@ class NFA:
             print(f"{state}: {transition}")
             
     def show_diagram(self, output_dir:str="output", output_name:str="nfa"):
+        """
+        Displays a diagram of the NFA using Graphviz.
+        Prints error message if it is not possible.
+        """
         # Copy states as just strings
         _states_strs = self.get_states_as_strings()
         _accept_strs = self.get_accepting_states_as_strings()
