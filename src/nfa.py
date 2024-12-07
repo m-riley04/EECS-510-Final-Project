@@ -4,6 +4,28 @@ from PIL import Image
 from automathon import NFA as VisualNFA
 from state import State
 
+@dataclass
+class AcceptResult:
+    """
+    Class representing the return value for the "accept" method of an NFA
+    """
+    accepted: bool
+    path: list[str]
+
+    def __repr__(self):
+        if self.accepted: return "accept"
+        return "reject"
+    
+    def __str__(self):
+        if self.accepted: return "accept"
+        return "reject"
+    
+    def __bool__(self):
+        return self.accepted
+    
+    def __len__(self):
+        return len(self.path)
+
 class NFA:
     def __init__(self, filename:str, debug:bool=False) -> None:
         # Initialize machine variables
