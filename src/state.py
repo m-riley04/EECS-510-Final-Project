@@ -1,4 +1,7 @@
 class State:
+    """
+    Represents a state in a finite state machine
+    """
     def __init__(self, name):
         self.name: str = name
         

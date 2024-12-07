@@ -3,8 +3,8 @@ from ingredients import INGREDIENTS, MAPPINGS
 from nfa import NFA
 
 ### GLOBAL CONSTANTS ###
-DEBUG:bool = False
-NFA_FILENAME:str = "nfa.txt"
+DEBUG: bool         = False
+NFA_FILENAME: str   = "nfa.txt"
 
 def accept(A: NFA, w: str) -> None:
     """
