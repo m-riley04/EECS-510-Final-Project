@@ -18,7 +18,7 @@ def accept(A: NFA, w: str) -> None:
     print(_)
 
     # Print the path if accepted
-    if _ == True: 
+    if bool(_) == True: 
         for t in _.path:
             print(t)
 

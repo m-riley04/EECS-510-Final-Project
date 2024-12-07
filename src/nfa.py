@@ -34,6 +34,24 @@ class NFA:
                 return s
         return None
     
+    def lambda_closure_with_path(self, states: set[State], path: list[str]) -> tuple[set[State], list[str]]:
+        """
+        Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
+        """
+        closure = set(states)
+        stack = list(states)
+        while stack:
+            current_state = stack.pop()
+            # Check if there are epsilon transitions from current_state
+            if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
+                for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
+                    if next_state not in closure:
+                        closure.add(next_state)
+                        stack.append(next_state)
+                        path.append(f"{current_state} {LAMBDA_SYMBOL} {next_state}")
+
+        return closure, path
+
     def lambda_closure(self, states: set[State]) -> set[State]:
         """
         Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
@@ -61,7 +79,7 @@ class NFA:
         result: AcceptResult = AcceptResult(False, [])
         
         # Start with epsilon-closure of the start state
-        current_states = self.lambda_closure({self.start_state})
+        current_states, result.path = self.lambda_closure_with_path({self.start_state}, result.path)
         
         # For each symbol in the input string
         for symbol in w:
@@ -71,13 +89,13 @@ class NFA:
             for state in current_states:
                 if state.name in self.transitions and symbol in self.transitions[state.name]:
                     # Record transition
-                    result.path.append(f"{state} {symbol} {self.transitions[state.name][symbol]}")
+                    result.path.append(f"{state} {symbol} {list(self.transitions[state.name][symbol])[0]}")
 
                     # Update next states set
                     next_states.update(self.transitions[state.name][symbol])
 
             # After consuming 'symbol', take epsilon-closure of the set of reachable states
-            current_states = self.lambda_closure(next_states)
+            current_states, result.path = self.lambda_closure_with_path(next_states, result.path)
         
         # Check if any current state is an accept state
         for s in current_states:
