@@ -4,6 +4,8 @@ from PIL import Image
 from automathon import NFA as VisualNFA
 from state import State
 
+LAMBDA_SYMBOL: str = "~"
+
 @dataclass
 class AcceptResult:
     """
