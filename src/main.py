@@ -4,7 +4,7 @@ from nfa import NFA
 
 ### GLOBAL CONSTANTS ###
 DEBUG: bool         = False
-NFA_FILENAME: str   = "nfa.txt"
+NFA_FILENAME: str   = "machines/nfa.txt"
 
 def accept(A: NFA, w: str) -> None:
     """
