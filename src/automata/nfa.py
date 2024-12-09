@@ -24,7 +24,11 @@ class NFA:
         self.debug = debug
         
         # Parse the input file
-        self._parse_input_file(filename)
+        if self._parse_input_file(filename):
+            # Debug print
+            if self.debug: print(f"Parsed input file {filename} successfully!")
+        else:
+            if self.debug: print(f"ERROR: Could not parse input file {filename}.")
         
     def find_state(self, name:str) -> State:
         """
@@ -163,7 +167,7 @@ class NFA:
         """
         return [s.name for s in self.accept_states]
     
-    def _get_transitions_as_string(self) -> dict[State, dict[str, set[State]]]:
+    def _get_transitions_as_string(self) -> dict[str, dict[str, set[str]]]:
         """
         Gets the transitions dictionary with strings instead of State objects.
         """
@@ -184,40 +188,43 @@ class NFA:
     
     def _parse_input_file(self, filename: str) -> bool:
         """
-        Parses the input file
+        Parses the input file. Returns True if the input was parsed successfully, and False otherwise.
         """
-        # Read the input file
-        with open(filename, 'r') as file:
-            lines = file.readlines()
-            # Line 1: A whitespace-separated list of states
-            self.states = [State(s) for s in lines[0].replace("\n", "").split(" ")]
-            
-            # Line 2: A whitespace-separated list of symbols
-            self.symbols = lines[1].replace("\n", "").split(" ")
-            
-            # Line 3: The start state
-            _ = lines[2].strip()
-            self.start_state = self.find_state(name=_)
-            
-            # Line 4: A whitespace-separated list of accept states
-            _ = lines[3].replace("\n", "").split(" ")
-            self.accept_states = [self.find_state(name=s) for s in _]
-            
-            # Line(s) 5+: Transitions
-            self.transitions = {state.name: {} for state in self.states}
-            for line in lines[4:]:
-                from_state, symbol, to_state = line.strip().split()
-                # Find states from names
-                from_state = self.find_state(from_state)
-                to_state = self.find_state(to_state)
-                # Create transition
-                if symbol not in self.transitions[from_state.name]:
-                    self.transitions[from_state.name][symbol] = set()
-                self.transitions[from_state.name][symbol].add(to_state)
-            
-            # Close the file
-            file.close()
+        ret: bool = True
+        try:
+            # Read the input file
+            with open(filename, 'r') as file:
+                lines = file.readlines()
+                # Line 1: A whitespace-separated list of states
+                self.states = [State(s) for s in lines[0].replace("\n", "").split(" ")]
+                
+                # Line 2: A whitespace-separated list of symbols
+                self.symbols = lines[1].replace("\n", "").split(" ")
+                
+                # Line 3: The start state
+                _ = lines[2].strip()
+                self.start_state = self.find_state(name=_)
+                
+                # Line 4: A whitespace-separated list of accept states
+                _ = lines[3].replace("\n", "").split(" ")
+                self.accept_states = [self.find_state(name=s) for s in _]
+                
+                # Line(s) 5+: Transitions
+                self.transitions = {state.name: {} for state in self.states}
+                for line in lines[4:]:
+                    from_state, symbol, to_state = line.strip().split()
+                    # Find states from names
+                    from_state = self.find_state(from_state)
+                    to_state = self.find_state(to_state)
+                    # Create transition
+                    if symbol not in self.transitions[from_state.name]:
+                        self.transitions[from_state.name][symbol] = set()
+                    self.transitions[from_state.name][symbol].add(to_state)
+                
+                # Close the file
+                file.close()
+        except:
+            ret = False
         
-        # Debug print
-        if self.debug: print(f"Parsed input file {filename} successfully!")
+        return ret
         
