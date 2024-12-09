@@ -27,10 +27,10 @@ def main():
     nfa: PastaNFA = PastaNFA(filename=NFA_FILENAME, debug=DEBUG)
     
     # Get the input string
-    inputString = input("Enter your ingredients: ")
+    w = input("Enter your ingredients: ")
     
     # Check if it accepts or returns the input
-    accept(A=nfa, w=inputString)
+    accept(A=nfa, w=w)
 
 if __name__ == "__main__":
     main()
