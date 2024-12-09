@@ -1,12 +1,10 @@
-from machine import Machine
-from ingredients import INGREDIENTS, MAPPINGS
-from nfa import NFA
+from automata.pasta_nfa import PastaNFA
 
 ### GLOBAL CONSTANTS ###
 DEBUG: bool         = False
 NFA_FILENAME: str   = "machines/nfa.txt"
 
-def accept(A: NFA, w: str) -> None:
+def accept(A: PastaNFA, w: str) -> None:
     """
     Tests a given string on a given machine.
     Prints either "accept" with the path/trace, or "reject".
@@ -24,7 +22,7 @@ def accept(A: NFA, w: str) -> None:
 
 def main():
     # Initialize NFA
-    nfa: NFA = NFA(filename=NFA_FILENAME, debug=DEBUG)
+    nfa: PastaNFA = PastaNFA(filename=NFA_FILENAME, debug=DEBUG)
     nfa.print() # Display parsed NFA info
     
     # Get the input string
