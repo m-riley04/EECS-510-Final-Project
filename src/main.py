@@ -1,7 +1,7 @@
 from automata.pasta_nfa import PastaNFA
 
 ### GLOBAL CONSTANTS ###
-DEBUG: bool                 = False
+DEBUG: bool                 = True
 FORMATTED_STEPS: bool       = True
 NFA_FILENAME: str           = "machines/nfa.txt"
 
