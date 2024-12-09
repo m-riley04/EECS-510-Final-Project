@@ -118,6 +118,25 @@ class NFA:
         """
         return [s.name for s in self.accept_states]
     
+    def get_transitions_as_string(self) -> dict[State, dict[str, set[State]]]:
+        """
+        Gets the transitions dictionary with strings instead of State objects.
+        """
+        _: dict[str, dict[str, set[str]]] = dict()
+        for from_state, symbol_map in self.transitions.items():
+            # Ensure from_state is a string (if from_state is a State object)
+            from_state_name = from_state if isinstance(from_state, str) else from_state.name
+            
+            _[from_state_name] = {}
+        
+            # Iterate through each symbol and its corresponding set of destination states
+            for symbol, to_states in symbol_map.items():
+                # Convert all destination states to their names (strings)
+                state_names = {s.name if hasattr(s, 'name') else s for s in to_states}
+                _[from_state_name][symbol] = state_names
+
+        return _
+    
     def parse_input_file(self, filename: str) -> bool:
         """
         Parses the input file
@@ -178,7 +197,7 @@ class NFA:
         visual_nfa = VisualNFA(
             q=self.get_states_as_strings(), # Input calls for set of STRINGS
             sigma=self.symbols, 
-            delta=self.transitions, 
+            delta=self.get_transitions_as_string(), 
             initial_state=self.start_state.name, 
             f=self.get_accepting_states_as_strings()) # Input calls for set of STRINGS
         
@@ -189,7 +208,7 @@ class NFA:
             
             # Check if output folder exists
             if not os.path.exists(output_dir):
-                os.mkdirs(output_dir)
+                os.makedirs(output_dir)
             
             # Create output image
             visual_nfa.view(output_path)
