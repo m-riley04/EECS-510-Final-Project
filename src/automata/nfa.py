@@ -35,7 +35,7 @@ class NFA:
                 return s
         return None
     
-    def _lambda_closure_with_path(self, states: set[State], path: list[str]) -> tuple[set[State], list[str]]:
+    def _lambda_closure_with_path(self, states: set[State], path: list[Transition]) -> tuple[set[State], list[Transition]]:
         """
         Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
         """
