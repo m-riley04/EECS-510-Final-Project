@@ -1,4 +1,4 @@
-from dataclasses.acceptresult import AcceptResult
+from automata.models.acceptresult import AcceptResult
 from automata.nfa import NFA, LAMBDA_SYMBOL
 
 ### CONSTANTS ###

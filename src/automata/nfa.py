@@ -1,8 +1,8 @@
 import os
 from PIL import Image
 from automathon import NFA as VisualNFA
-from dataclasses.state import State
-from dataclasses.acceptresult import AcceptResult
+from automata.models.state import State
+from automata.models.acceptresult import AcceptResult
 
 ### CONSTANTS ###
 LAMBDA_SYMBOL: str  = "~"
