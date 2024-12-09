@@ -24,7 +24,7 @@ class NFA:
         self.debug = debug
         
         # Parse the input file
-        self.parse_input_file(filename)
+        self._parse_input_file(filename)
         
     def find_state(self, name:str) -> State:
         """
@@ -34,42 +34,6 @@ class NFA:
             if s.name == name:
                 return s
         return None
-    
-    def _lambda_closure_with_path(self, states: set[State], path: list[Transition]) -> tuple[set[State], list[Transition]]:
-        """
-        Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
-        """
-        closure = set(states)
-        stack = list(states)
-        while stack:
-            current_state = stack.pop()
-            # Check if there are epsilon transitions from current_state
-            if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
-                for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
-                    if next_state not in closure:
-                        closure.add(next_state)
-                        stack.append(next_state)
-                        path.append(Transition(from_state=current_state, symbol=LAMBDA_SYMBOL, to_state=next_state))
-
-        return closure, path
-
-    def _lambda_closure(self, states: set[State]) -> set[State]:
-        """
-        Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
-        """
-        closure = set(states)
-        stack = list(states)
-
-        while stack:
-            current_state = stack.pop()
-            # Check if there are epsilon transitions from current_state
-            if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
-                for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
-                    if next_state not in closure:
-                        closure.add(next_state)
-                        stack.append(next_state)
-
-        return closure
 
     def accept(self, w: str) -> AcceptResult:
         """
@@ -107,19 +71,99 @@ class NFA:
         # Return the result
         return result
     
-    def get_states_as_strings(self) -> list[str]:
+    def print(self):
+        """
+        Prints the main values of the NFA (states, symbols, start state, accept state(s), and transitions)
+        """
+        print(f"States: {self.states}")
+        print(f"Symbols: {self.symbols}")
+        print(f"Start State: {self.start_state}")
+        print(f"Accept States: {self.accept_states}")
+        print("Transitions:")
+        for state, transition in self.transitions.items():
+            print(f"{state}: {transition}")
+            
+    def generate_diagram(self, output_dir:str="output", output_name:str="nfa"):
+        """
+        Displays a diagram of the NFA using Graphviz.
+        Prints error message if it is not possible.
+        
+        Note: Graphviz must be installed on your system and in your PATH environment variable.
+        """
+        # Visualize the NFA using graphiz
+        visual_nfa = VisualNFA(
+            q=self._get_states_as_strings(), # Input calls for set of STRINGS
+            sigma=self.symbols, 
+            delta=self._get_transitions_as_string(), 
+            initial_state=self.start_state.name, 
+            f=self._get_accepting_states_as_strings()) # Input calls for set of STRINGS
+        
+        # Attempt to visualize using Graphviz
+        try:
+            # Initialize output path
+            output_path = output_dir + "/" + output_name
+            
+            # Check if output folder exists
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
+            
+            # Create output image
+            visual_nfa.view(output_path)
+            Image.open(output_path + ".gv.png").show()
+        except Exception as e:
+            print("ERROR: Unable to visualize NFA.")
+            print(f"Details: {e}")
+            
+    ### PRIVATE METHODS ###
+    def _lambda_closure_with_path(self, states: set[State], path: list[Transition]) -> tuple[set[State], list[Transition]]:
+        """
+        Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
+        """
+        closure = set(states)
+        stack = list(states)
+        while stack:
+            current_state = stack.pop()
+            # Check if there are epsilon transitions from current_state
+            if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
+                for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
+                    if next_state not in closure:
+                        closure.add(next_state)
+                        stack.append(next_state)
+                        path.append(Transition(from_state=current_state, symbol=LAMBDA_SYMBOL, to_state=next_state))
+
+        return closure, path
+
+    def _lambda_closure(self, states: set[State]) -> set[State]:
+        """
+        Computes the lambda closure of the given set of states (all states reachable from the input states via zero or more -transitions)
+        """
+        closure = set(states)
+        stack = list(states)
+
+        while stack:
+            current_state = stack.pop()
+            # Check if there are epsilon transitions from current_state
+            if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
+                for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
+                    if next_state not in closure:
+                        closure.add(next_state)
+                        stack.append(next_state)
+
+        return closure
+        
+    def _get_states_as_strings(self) -> list[str]:
         """
         Gets the list of states as a list of strings.
         """
         return [s.name for s in self.states]
     
-    def get_accepting_states_as_strings(self) -> list[str]:
+    def _get_accepting_states_as_strings(self) -> list[str]:
         """
         Gets the list of accepting states as a list of strings.
         """
         return [s.name for s in self.accept_states]
     
-    def get_transitions_as_string(self) -> dict[State, dict[str, set[State]]]:
+    def _get_transitions_as_string(self) -> dict[State, dict[str, set[State]]]:
         """
         Gets the transitions dictionary with strings instead of State objects.
         """
@@ -138,7 +182,7 @@ class NFA:
 
         return _
     
-    def parse_input_file(self, filename: str) -> bool:
+    def _parse_input_file(self, filename: str) -> bool:
         """
         Parses the input file
         """
@@ -176,45 +220,4 @@ class NFA:
         
         # Debug print
         if self.debug: print(f"Parsed input file {filename} successfully!")
-        
-    def print(self):
-        """
-        Prints the main values of the NFA (states, symbols, start state, accept state(s), and transitions)
-        """
-        print(f"States: {self.states}")
-        print(f"Symbols: {self.symbols}")
-        print(f"Start State: {self.start_state}")
-        print(f"Accept States: {self.accept_states}")
-        print("Transitions:")
-        for state, transition in self.transitions.items():
-            print(f"{state}: {transition}")
-            
-    def generate_diagram(self, output_dir:str="output", output_name:str="nfa"):
-        """
-        Displays a diagram of the NFA using Graphviz.
-        Prints error message if it is not possible.
-        """
-        # Visualize the NFA using graphiz
-        visual_nfa = VisualNFA(
-            q=self.get_states_as_strings(), # Input calls for set of STRINGS
-            sigma=self.symbols, 
-            delta=self.get_transitions_as_string(), 
-            initial_state=self.start_state.name, 
-            f=self.get_accepting_states_as_strings()) # Input calls for set of STRINGS
-        
-        # Attempt to visualize using Graphviz
-        try:
-            # Initialize output path
-            output_path = output_dir + "/" + output_name
-            
-            # Check if output folder exists
-            if not os.path.exists(output_dir):
-                os.makedirs(output_dir)
-            
-            # Create output image
-            visual_nfa.view(output_path)
-            Image.open(output_path + ".gv.png").show()
-        except Exception as e:
-            print("ERROR: Unable to visualize NFA.")
-            print(f"Details: {e}")
         

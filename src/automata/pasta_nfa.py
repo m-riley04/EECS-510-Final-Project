@@ -15,7 +15,7 @@ class PastaNFA(NFA):
         super().__init__(filename=filename, debug=debug)
 
         # Generate a dictionary of symbol-ingredient pairs
-        self.ingredients = {symbol: ingredients[i] for i, symbol in enumerate(self.symbols)}
+        self.ingredients: dict[str, str] = {symbol: ingredients[i] for i, symbol in enumerate(self.symbols)}
 
     def print_formatted_steps(self, result: AcceptResult):
         if result:
