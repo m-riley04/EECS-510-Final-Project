@@ -17,7 +17,7 @@ class PastaNFA(NFA):
         # Generate a dictionary of symbol-ingredient pairs
         self.ingredients: dict[str, str] = {symbol: ingredients[i] for i, symbol in enumerate(self.symbols)}
 
-    def print_formatted_steps(self, result: AcceptResult):
+    def print_recipe(self, result: AcceptResult):
         if result:
             # The string is accepted, which means we have a valid "recipe"
             print("The dish is complete! Here are the steps:")

@@ -38,7 +38,7 @@ def accept(A: PastaNFA, w: str) -> None:
             print(t)
 
     # Print the formatted steps
-    if args.formatted_steps: A.print_formatted_steps(_)
+    if args.formatted_steps: A.print_recipe(_)
 
 def main():
     # Initialize NFA
