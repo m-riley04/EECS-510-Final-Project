@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from automata.models.transition import Transition
 
 @dataclass
 class AcceptResult:
@@ -6,7 +7,7 @@ class AcceptResult:
     Class representing the return value for the "accept" method of an NFA
     """
     accepted: bool
-    path: list[str]
+    path: list[Transition]
 
     def __repr__(self):
         if self.accepted: return "accept"

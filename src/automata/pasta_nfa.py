@@ -26,34 +26,34 @@ class PastaNFA(NFA):
             print("The sequence of ingredients does not form a valid dish.")
             return
 
-        # Print out the steps by parsing "[state] [symbol] [state]" transitions/paths.
+        # Print out the steps by parsing the path/transitions
         i: int = 1
-        for step in result.path:
-            # Each step is something like: "q0 A q1"
-            parts = step.split()  # ["state_from", "symbol", "state_dest"]
-            if len(parts) == 3:
-                # The middle is symbol
-                symbol = parts[1]
-                
-                # If symbol is not a lambda transition (~), print instruction
-                if symbol != LAMBDA_SYMBOL and symbol in self.ingredients:
-                    # Get the ingredient map
-                    name = self.ingredients[symbol]
+        for transition in result.path:
+            if len(transition) < 3:
+                continue
+            
+            # Get the symbol from the transition
+            symbol = transition.symbol
+            
+            # If symbol is not a lambda transition (~), print instruction
+            if symbol != LAMBDA_SYMBOL and symbol in self.ingredients:
+                # Get the ingredient map
+                name = self.ingredients[symbol]
 
-                    # Print the step marker
-                    print(f"Step {i}: ", end="")
+                # Print the step marker
+                print(f"Step {i}: ", end="")
 
-                    # Check the type of ingredient and print the corresponding step
-                    if name in PASTA:
-                        print(f"Boil and plate the {name} pasta noodles.")
-                    elif name in SAUCES:
-                        print(f"Top the dish with {name} sauce.")
-                    elif name in ADDONS:
-                        print(f"Prepare and add {name}.")
-                    else:
-                        print(f"Add {name}.")
+                # Check the type of ingredient and print the corresponding step
+                if name in PASTA:
+                    print(f"Boil and plate the {name} pasta noodles.")
+                elif name in SAUCES:
+                    print(f"Top the dish with {name} sauce.")
+                elif name in ADDONS:
+                    print(f"Prepare and add {name}.")
+                else:
+                    print(f"Add {name}.")
 
-                    # Increment step count
-                    i += 1
+                # Increment step count
+                i += 1
 
         return result
