@@ -5,6 +5,13 @@ DEBUG: bool                 = False
 FORMATTED_STEPS: bool       = True
 NFA_FILENAME: str           = "machines/nfa.txt"
 
+def format_input(s: str) -> str:
+    """
+    Cleans and formats input so it is most compatable with our machine.
+    """
+    # TODO: Add more cleaning/formatting here? (.upper(), removing characters, etc.)
+    return s.strip()
+
 def accept(A: PastaNFA, w: str) -> None:
     """
     Tests a given string on a given machine.
@@ -25,9 +32,14 @@ def accept(A: PastaNFA, w: str) -> None:
 def main():
     # Initialize NFA
     nfa: PastaNFA = PastaNFA(filename=NFA_FILENAME, debug=DEBUG)
+
+    # Debug actions
+    if DEBUG: 
+        nfa.print()
+        nfa.generate_diagram()
     
     # Get the input string
-    w = input("Enter your ingredients: ")
+    w = format_input(input("Enter your ingredients: "))
     
     # Check if it accepts or returns the input
     accept(A=nfa, w=w)

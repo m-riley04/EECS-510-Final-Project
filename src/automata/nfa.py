@@ -169,7 +169,7 @@ class NFA:
         for state, transition in self.transitions.items():
             print(f"{state}: {transition}")
             
-    def show_diagram(self, output_dir:str="output", output_name:str="nfa"):
+    def generate_diagram(self, output_dir:str="output", output_name:str="nfa"):
         """
         Displays a diagram of the NFA using Graphviz.
         Prints error message if it is not possible.
