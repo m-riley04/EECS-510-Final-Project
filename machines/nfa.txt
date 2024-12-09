@@ -1,12 +1,15 @@
 q0 q1 q2
-A B C D E F G
+A B C D E F G H I J
 q0
 q1
 q0 A q1
-q1 B q2
-q1 C q2
+q0 B q1
+q0 C q1
 q1 D q2
 q1 E q2
 q1 F q2
 q1 G q2
+q1 H q2
+q1 I q2
+q1 J q2
 q2 ~ q1
