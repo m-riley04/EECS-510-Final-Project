@@ -2,10 +2,21 @@
 > Checkmarks and Xs are to show what is already done and what still needs to be clarified or worked on.
 
 # Dependencies
-- `pillow`
-- `automathon`
+- `pillow` 10.3.0 ([docs](https://pillow.readthedocs.io/en/stable/), [PyPi](https://pypi.org/project/pillow/))
+- `automathon` 0.0.15 ([GitHub](https://github.com/rohaquinlop/automathon), [PyPi](https://pypi.org/project/automathon/))
+- [Graphviz](https://graphviz.org/download/) (optional)
 
+# Building/Running
+1. Install dependencies.
+2. Navigate to the root directory of the repository
+3. Run the following command:
+```bash
+> python src/main.py
+```
+You will then be prompted to enter an input string. Enter a string and hit enter.
 
+# Full Project Documentation
+The full formatted [project documentation file](https://github.com/m-riley04/EECS-510-Final-Project/blob/main/EECS%20510%20Final%20Project.pdf) is located in the PDF in the root repo folder.
 
 ## Project Description
 
@@ -33,10 +44,6 @@ A ✅ - Accepted
 
 CBA ❌ - Rejected
 ```
-
-
-
-
 
 ### Part 2 - Grammar ✅
 
