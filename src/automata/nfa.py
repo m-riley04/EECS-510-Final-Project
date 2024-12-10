@@ -47,7 +47,7 @@ class NFA:
         # Initialize return value
         result: AcceptResult = AcceptResult(False, [])
         
-        # Start with epsilon-closure of the start state
+        # Start with lambda closure of the start state
         current_states, result.path = self._lambda_closure_with_path({self.start_state}, result.path)
         
         # For each symbol in the input string
@@ -63,7 +63,7 @@ class NFA:
                     # Update next states set
                     next_states.update(self.transitions[state.name][symbol])
 
-            # After consuming 'symbol', take epsilon-closure of the set of reachable states
+            # After consuming 'symbol', take lambda closure of the set of reachable states
             current_states, result.path = self._lambda_closure_with_path(next_states, result.path)
         
         # Check if any current state is an accept state
@@ -127,7 +127,7 @@ class NFA:
         stack = list(states)
         while stack:
             current_state = stack.pop()
-            # Check if there are epsilon transitions from current_state
+            # Check if there are lambda transitions from current_state
             if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
                 for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
                     if next_state not in closure:
@@ -146,7 +146,7 @@ class NFA:
 
         while stack:
             current_state = stack.pop()
-            # Check if there are epsilon transitions from current_state
+            # Check if there are lambda transitions from current_state
             if current_state.name in self.transitions and LAMBDA_SYMBOL in self.transitions[current_state.name]:
                 for next_state in self.transitions[current_state.name][LAMBDA_SYMBOL]:
                     if next_state not in closure:
