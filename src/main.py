@@ -1,3 +1,4 @@
+from automata.models.acceptresult import AcceptResult
 from automata.pasta_nfa import PastaNFA
 import argparse
 
@@ -23,26 +24,28 @@ def format_input(s: str) -> str:
     # TODO: Add more cleaning/formatting here? (.upper(), removing characters, etc.)
     return s.strip()
 
-def accept(A: PastaNFA, w: str) -> None:
+def accept(A: PastaNFA, w: str) -> AcceptResult:
     """
     Tests a given string on a given machine.
-    Prints either "accept" with the path/trace, or "reject".
+    Returns an AcceptResult containing either "accept" with the path/trace, or "reject".
     """
-    # Run the input in the machine
-    _ = A.accept(w=w)
+    return A.accept(w=w)
     
-    # Print the acceptance result and path (if accepted)
-    print(_)
-    if bool(_) == True and args.print_path: 
-        for t in _.path:
+def print_output(A: PastaNFA, result: AcceptResult, print_path: bool, print_formatted: bool) -> None:
+    """
+    Prints the acceptance result and the path (if accepted).
+    """
+    print(result)
+    if bool(result) == True and print_path: 
+        for t in result.path:
             print(t)
 
     # Print the formatted steps
-    if args.formatted_steps: A.print_recipe(_)
+    if print_formatted: A.print_recipe(result)
 
 def main():
     # Initialize NFA
-    nfa: PastaNFA = PastaNFA(filename=args.machine_path, debug=args.debug)
+    nfa = PastaNFA(filename=args.machine_path, debug=args.debug)
 
     # Debug actions
     if args.debug:
@@ -55,7 +58,10 @@ def main():
         w = format_input(input("Enter your ingredients: "))
     
     # Check if it accepts or returns the input
-    accept(A=nfa, w=w)
+    result = accept(A=nfa, w=w)
+    
+    # Print the output
+    print_output(A=nfa, result=result, print_path=args.print_path, print_formatted=args.formatted_steps)
 
 if __name__ == "__main__":
     main()
