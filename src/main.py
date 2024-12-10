@@ -41,7 +41,9 @@ def print_output(A: PastaNFA, result: AcceptResult, print_path: bool, print_form
             print(t)
 
     # Print the formatted steps
-    if print_formatted: A.print_recipe(result)
+    if print_formatted: 
+        print("\n== Recipe ==")
+        A.print_recipe(result)
 
 def main():
     # Initialize NFA
