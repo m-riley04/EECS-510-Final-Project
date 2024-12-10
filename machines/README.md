@@ -14,7 +14,7 @@ The format of each "machine" file is as follows:
 ```
 
 ### Line 1: States 
-a space-seperated list of states
+a space-separated list of states
 
 Example:
 ```
@@ -22,7 +22,7 @@ q0 q1 q2
 ```
 
 ### Line 2: Symbols
-a space-seperated list of symbols
+a space-separated list of symbols
 
 > NOTE: Lambda (~) does not *need* to be specified, but can be.
 
@@ -40,7 +40,7 @@ q0
 ```
 
 ### Line 4: Accept States
-a space-seperated list of accept states
+a space-separated list of accept states
 
 Example:
 ```
@@ -48,7 +48,7 @@ q0 q2
 ```
 
 ### Line 5+: Transitions
-a space-seperated list of 3 components:
+a space-separated list of 3 components:
 - From State: the outbound state of the transition
 - Symbol: the symbol to transition on
 - To State: the inbound state of the transition
