@@ -1,6 +1,3 @@
-# EECS-510-Final-Project
-> Checkmarks and Xs are to show what is already done and what still needs to be clarified or worked on.
-
 # Full Project Documentation
 The full formatted [project documentation file](https://github.com/m-riley04/EECS-510-Final-Project/blob/main/EECS%20510%20Final%20Project.pdf) is located in the PDF in the root repo folder. It has all of this documentation and more required for the project.
 
@@ -18,7 +15,8 @@ The full formatted [project documentation file](https://github.com/m-riley04/EEC
 ```
 You will then be prompted to enter an input string. Enter a string and hit enter.
 
-
+# EECS-510-Final-Project
+> Checkmarks and Xs are to show what is already done and what still needs to be clarified or worked on.
 
 ## Project Description
 
