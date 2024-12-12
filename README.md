@@ -9,10 +9,10 @@ Project is built on python 3.12.1
 - [Graphviz](https://graphviz.org/download/) (optional)
 
 # Building/Running
-Clone repo to desired folder and cd into /EECS-510-Final-Project/
+First, clone the repository to the desired folder and navigate to `/EECS-510-Final-Project/`.
 
-Use of a virtual environment is reconmmended such as `venv` environment or a Conda environment if installing dependencies is not wanted on the root system.
-
+## Virtual Environment Setup
+Use of a virtual environment is reconmmended such as `venv` environment or a Conda environment if installing dependencies is not wanted on the root system. If one does not care about dependencies on their root system, you can skip this step.
 ### Conda
 ```bash
 > conda create --name myenv python=3.12.1
@@ -33,8 +33,8 @@ On Windows:
 > venv\Scripts\activate
 ```
 
-
-1. Install dependencies.
+## Installing Dependencies
+To install dependencies, you can run the following commands depending on your package manager:
     #### Conda
     ```bash
     > conda install pillow automathon
@@ -44,9 +44,10 @@ On Windows:
     > pip install pillow automathon
     ```
 
-2. Run the following command:
+## Running 
+To run our program, execute the following command:
 ```bash
 > python src/main.py
 ```
-You will then be prompted to enter an input string. Enter a string and hit enter.
 
+You will then be prompted to enter an input string. Enter a string and hit enter. You should see the acceptance result, a path/trace (if accepted), and a formatted recipe (if accapted).
