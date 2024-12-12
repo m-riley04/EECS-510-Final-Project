@@ -11,37 +11,37 @@ Project is built on python 3.12.1
 # Building/Running
 Clone repo to desired folder and cd into /EECS-510-Final-Project/
 
-Use of a virtual env is reconmmended such as venv env or a Conda env if installing dependencies is not wanted on root.
+Use of a virtual environment is reconmmended such as `venv` environment or a Conda environment if installing dependencies is not wanted on the root system.
 
 ### Conda
 ```bash
-conda create --name myenv python=3.12.1
+> conda create --name myenv python=3.12.1
 ```
 ```bash
-conda activate myenv
+> conda activate myenv
 ```
 ### Venv
 ```bash
-python3.12 -m venv venv
+> python -m venv venv
 ```
 activate venv on Mac/Linux:
 ```bash
-source venv/bin/activate
+> source venv/bin/activate
 ```
 On Windows:
 ```bash
-venv\Scripts\activate
+> venv\Scripts\activate
 ```
 
 
 1. Install dependencies.
     #### Conda
     ```bash
-    conda install pillow automathon
+    > conda install pillow automathon
     ```
     #### Venv
     ```bash
-    pip install pillow automathon
+    > pip install pillow automathon
     ```
 
 2. Run the following command:
