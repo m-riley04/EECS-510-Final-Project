@@ -12,7 +12,7 @@ Project is built on python 3.12.1
 First, clone the repository to the desired folder and navigate to `/EECS-510-Final-Project/`. After that is complete, follow these next sections to complete setup:
 
 ## Virtual Environment Setup
-Use of a virtual environment is reconmmended such as `venv` environment or a Conda environment if installing dependencies is not wanted on the root system. If one does not care about dependencies on their root system, you can skip this section.
+Use of a virtual environment is recommended such as `venv` environment or a Conda environment if installing dependencies is not wanted on the root system. If one does not care about dependencies on their root system, you can skip this section.
 ### Conda
 ```bash
 > conda create --name myenv python=3.12.1
@@ -50,4 +50,10 @@ To run our program, execute the following command:
 > python src/main.py
 ```
 
-You will then be prompted to enter an input string. Enter a string and hit enter. You should see the acceptance result, a path/trace (if accepted), and a formatted recipe (if accapted).
+You will then be prompted to enter an input string. Enter a string and hit enter. You should see the acceptance result, a path/trace (if accepted), and a formatted recipe (if accepted).
+
+### Alphabet
+
+- A-C : Pastas (Spaghetti, fettuccini, and Macaroni)
+- D-F : Sauces (Marina, Alfredo, and Pesto)
+- G-J : Addons (Ground meat, Chicken, Olive oil, Garlic, Onions, and Broccoli)
